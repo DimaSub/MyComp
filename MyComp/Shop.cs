@@ -5,7 +5,7 @@ namespace MyComp
 {
     public class Shop
     {
-        public Shop(int id, string name, List<Address> address, int area, List<Manager> manager, List<Computer> computer)
+        public Shop(int id, string name, Address address, int area, Manager manager, List<Computer> computer)
         {
             this.id = id;
             this.name = name;
@@ -17,25 +17,25 @@ namespace MyComp
 
         private int id;
         private string name;
-        private List<Address> address;
+        private Address address;
         private int area;
-        private List<Manager> manager;
+        private Manager manager;
         private List<Computer> computer;
 
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
-        public List<Address> Address { get => address; set => address = value; }
+        public Address Address { get => address; set => address = value; }
         public int Area { get => area; set => area = value; }
-        public List<Manager> Manager { get => manager; set => manager = value; }
+        public Manager Manager { get => manager; set => manager = value; }
         public List<Computer> Computer { get => computer; set => computer = value; }
         
         public override string ToString()
         {
             return "Store ID: " + id +
                    "\nBranch name: " + name +
-                   "\nAddress: \n" + address[id] +
+                   "\nAddress: \n" + address +
                    "\nArea size: " + area +
-                   "\nBranch manager: \n" + manager[id];
+                   "\nBranch manager: \n" + manager;
         }
     }
 }

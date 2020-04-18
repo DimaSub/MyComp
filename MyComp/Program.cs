@@ -25,12 +25,8 @@ namespace MyComp
                           "\n4->Print list of the computers" +
                           "\n5->Calculate the total price of the computers\n";
             List<Shop> shopList = new List<Shop>();
-            List<Address> addressList = new List<Address>();
-            List<Manager> managerList = new List<Manager>();
             int shopid = 0;
             int pcid = 0;
-            int addressid = 0;
-            int managerid = 0;
 
             while (exit != 8)
             {
@@ -72,8 +68,6 @@ namespace MyComp
                         }
 
                         int building = int.Parse(buildingchk);
-                        addressList.Add(new Address(addressid, storecity, storestreet, building));
-                        addressid++;
                         Console.Write("\nEnter stores area: ");
                         string areachk = Console.ReadLine();
 
@@ -103,9 +97,7 @@ namespace MyComp
                         string managersurname = Console.ReadLine();
                         Console.Write("Address - ");
                         string manageraddress = Console.ReadLine();
-                        managerList.Add(new Manager(managerid, identity, managername, managersurname, manageraddress));
-                        managerid++;
-                        shopList.Add(new Shop(shopid, storename, addressList, area, managerList, new List<Computer>()));
+                        shopList.Add(new Shop(shopid, storename, new Address(shopid, storecity, storestreet, building), area, new Manager(shopid, identity, managername, managersurname, manageraddress), new List<Computer>()));
                         shopid++;
                         Console.Clear();
                         Console.WriteLine("New shop added\n");
@@ -118,7 +110,13 @@ namespace MyComp
                         {
                             foreach (Shop item in shopList)
                             {
+                                int shopsum = 0;
                                 Console.WriteLine(item);
+                                foreach (Computer list in item.Computer)
+                                {
+                                    shopsum = shopsum + list.Price;
+                                }
+                                Console.WriteLine("Warehouse stock price is: {0}\n", shopsum);
                             }
                         }
 
@@ -189,6 +187,25 @@ namespace MyComp
                     if (option == 5)
                     {
                         Console.Clear();
+                        if (shopList.Any())
+                        {
+                            Console.Write("Enter manger ID: ");
+                            string shopbyidchk = Console.ReadLine();
+
+                            while (!int.TryParse(shopbyidchk, out int value))
+                            {
+                                Console.Clear();
+                                Console.Write("\"{0}\" is not a valid manager id, please select again: \n\n", shopbyidchk);
+                                Console.Write("Please input correct manager id: ");
+                                shopbyidchk = Console.ReadLine();
+                            }
+
+                            int shopbyid = int.Parse(shopbyidchk);
+
+
+                        }
+
+                        else Console.WriteLine("Shop list is empty\n");
                     }
 
                     if (option == 6)
@@ -353,6 +370,16 @@ namespace MyComp
                                                 shopList[shopindex].Computer.Remove(id_del);
                                                 Console.Clear();
                                                 Console.WriteLine("ID {0}: was successfully deleted\n", del);
+
+                                                if (shopList[shopindex].Computer.Any())
+                                                {
+                                                    foreach (Computer item in shopList[shopindex].Computer)
+                                                    {
+                                                        Console.WriteLine(item);
+                                                    }
+                                                }
+
+                                                else Console.WriteLine("Computer list is empty\n");
                                             }
 
                                             else
@@ -475,7 +502,9 @@ namespace MyComp
 
                             if (storedelflag)
                             {
+                                Console.Clear();
                                 shopList.RemoveAt(shopdelindex);
+                                Console.WriteLine("Store {0} was successfully deleted\n", shopdel);
                             }
 
                             else
