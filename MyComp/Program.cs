@@ -202,6 +202,7 @@ namespace MyComp
 
                             int shopbyid = int.Parse(shopbyidchk);
 
+                            bool gotshop = false;
                             Console.Clear();
                             foreach (Shop item in shopList)
                             {
@@ -209,8 +210,11 @@ namespace MyComp
                                 {
                                     Console.WriteLine(item);
                                     Console.WriteLine();
+                                    gotshop = true;
                                 }
                             }
+
+                            if (!gotshop) Console.WriteLine("There is no shop managers with that ID\n");
                         }
 
                         else Console.WriteLine("Shop list is empty\n");
