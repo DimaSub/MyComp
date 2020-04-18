@@ -105,7 +105,7 @@ namespace MyComp
                         string manageraddress = Console.ReadLine();
                         managerList.Add(new Manager(managerid, identity, managername, managersurname, manageraddress));
                         managerid++;
-                        shopList.Add(new Shop(shopid, storename, addressList, area, managerList, 0, new List<Computer>()));
+                        shopList.Add(new Shop(shopid, storename, addressList, area, managerList, new List<Computer>()));
                         shopid++;
                         Console.Clear();
                         Console.WriteLine("New shop added\n");
