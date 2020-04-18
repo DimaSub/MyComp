@@ -202,7 +202,15 @@ namespace MyComp
 
                             int shopbyid = int.Parse(shopbyidchk);
 
-
+                            Console.Clear();
+                            foreach (Shop item in shopList)
+                            {
+                                if (item.Manager.Identity == shopbyid)
+                                {
+                                    Console.WriteLine(item);
+                                    Console.WriteLine();
+                                }
+                            }
                         }
 
                         else Console.WriteLine("Shop list is empty\n");
