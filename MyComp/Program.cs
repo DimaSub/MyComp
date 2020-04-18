@@ -128,7 +128,58 @@ namespace MyComp
                     if (option == 3)
                     {
                         Console.Clear();
+                        if (shopList.Any())
+                        {
+                            Console.Write("Please input shop id: ");
+                            string shopselectchk = Console.ReadLine();
+
+                            while (!int.TryParse(shopselectchk, out int value))
+                            {
+                                Console.Clear();
+                                Console.Write("\"{0}\" is not a valid shop id, please select again: \n\n", shopselectchk);
+                                Console.Write("Please input correct shop id: ");
+                                shopselectchk = Console.ReadLine();
+                            }
+
+                            int shopselect = int.Parse(shopselectchk);
+                            bool storeflag = false;
+                            int shopindex = -1;
+
+                            foreach (Shop item in shopList)
+                            {
+                                if (item.Id == shopselect)
+                                {
+                                    storeflag = true;
+                                    shopindex = shopList.IndexOf(item);
+                                }
+                            }
+
+                            if (storeflag)
+                            {
+                                Console.Clear();
+                                if (shopList[shopindex].Computer.Any())
+                                {
+                                    Console.WriteLine("Computers in inventory:");
+
+                                    foreach (Computer list in shopList[shopindex].Computer)
+                                    {
+                                        Console.WriteLine(list + "\n");
+                                    }
+                                }
+
+                                else Console.WriteLine("No computers in inventory\n");
+                            }
+
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Shop doesnt exist\n");
+                            }
+                        }
+
+                        else Console.WriteLine("Shop list is empty\n");
                     }
+                    
 
                     if (option == 4)
                     {
