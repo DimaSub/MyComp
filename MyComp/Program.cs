@@ -23,10 +23,8 @@ namespace MyComp
                           "\n2->Remove computer" +
                           "\n3->Print computer list by Company Name" +
                           "\n4->Print list of the computers" +
-                          "\n5->Calculate the total price of the computers" +
-                          "\n6->Еxit\n";
+                          "\n5->Calculate the total price of the computers\n";
             List<Shop> shopList = new List<Shop>();
-            List<Computer> pcList = new List<Computer>();
             List<Address> addressList = new List<Address>();
             List<Manager> managerList = new List<Manager>();
             int shopid = 0;
@@ -107,7 +105,7 @@ namespace MyComp
                         string manageraddress = Console.ReadLine();
                         managerList.Add(new Manager(managerid, identity, managername, managersurname, manageraddress));
                         managerid++;
-                        shopList.Add(new Shop(shopid, storename, addressList, area, managerList));
+                        shopList.Add(new Shop(shopid, storename, addressList, area, managerList, 0, new List<Computer>()));
                         shopid++;
                         Console.Clear();
                         Console.WriteLine("New shop added\n");
@@ -116,10 +114,15 @@ namespace MyComp
                     if (option == 2)
                     {
                         Console.Clear();
-                        foreach (Shop item in shopList)
+                        if (shopList.Any())
                         {
-                            Console.WriteLine(item + "\n");
+                            foreach (Shop item in shopList)
+                            {
+                                Console.WriteLine(item);
+                            }
                         }
+
+                        else Console.WriteLine("Shop list is empty\n");
                     }
 
                     if (option == 3)
@@ -140,11 +143,298 @@ namespace MyComp
                     if (option == 6)
                     {
                         Console.Clear();
+                        if (shopList.Any())
+                        {
+                            Console.Write("Please input shop id: ");
+                            string shopselectchk = Console.ReadLine();
+
+                            while (!int.TryParse(shopselectchk, out int value))
+                            {
+                                Console.Clear();
+                                Console.Write("\"{0}\" is not a valid shop id, please select again: \n\n", shopselectchk);
+                                Console.Write("Please input correct shop id: ");
+                                shopselectchk = Console.ReadLine();
+                            }
+
+                            int shopselect = int.Parse(shopselectchk);
+                            bool storeflag = false;
+                            int shopindex = -1;
+
+                            foreach (Shop item in shopList)
+                            {
+                                if (item.Id == shopselect)
+                                {
+                                    storeflag = true;
+                                    shopindex = shopList.IndexOf(item);
+                                }
+                            }
+
+                            if (storeflag)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Managing shop id: {0}\n",shopselect);
+                                Console.WriteLine(submenu);
+                                Console.Write("Please select an option: ");
+                                string suboptionchk = Console.ReadLine();
+
+                                while (!int.TryParse(suboptionchk, out int value))
+                                {
+                                    Console.Clear();
+                                    Console.Write("\"{0}\" is not a valid option, please select again: \n\n", suboptionchk);
+                                    Console.WriteLine(submenu);
+                                    Console.Write("Please select an option: ");
+                                    suboptionchk = Console.ReadLine();
+                                }
+
+                                int suboption = int.Parse(suboptionchk);
+
+                                if (suboption > 0 && suboption < 6)
+                                {
+                                    if (suboption == 1)
+                                    {
+                                        Console.Clear();
+                                        Console.Write("Enter computer brand: ");
+                                        string brand = Console.ReadLine();
+                                        Console.Write("Enter processor type: ");
+                                        string processor = Console.ReadLine();
+                                        Console.Write("Enter storage type: ");
+                                        string storagetype = Console.ReadLine();
+                                        Console.Write("Enter storage size: ");
+                                        string storagechk = Console.ReadLine();
+
+                                        while (!int.TryParse(storagechk, out int value))
+                                        {
+                                            Console.Write("\"{0}\" is not a valid option, please select again: \n", storagechk);
+                                            Console.Write("Please enter correct storage size: ");
+                                            storagechk = Console.ReadLine();
+                                        }
+
+                                        int storagesize = int.Parse(storagechk);
+                                        Console.Write("Enter RAM size: ");
+                                        string ramchk = Console.ReadLine();
+
+                                        while (!int.TryParse(ramchk, out int value))
+                                        {
+                                            Console.Write("\"{0}\" is not a valid option, please select again: \n", ramchk);
+                                            Console.Write("Please enter correct RAM size: ");
+                                            ramchk = Console.ReadLine();
+                                        }
+
+                                        int ram = int.Parse(ramchk);
+                                        Console.Write("Enter computers price: ");
+                                        string pricechk = Console.ReadLine();
+
+                                        while (!int.TryParse(pricechk, out int value))
+                                        {
+                                            Console.Write("\"{0}\" is not a valid option, please select again: \n", pricechk);
+                                            Console.Write("Please enter correct price: ");
+                                            pricechk = Console.ReadLine();
+                                        }
+
+                                        int price = int.Parse(pricechk);
+                                        Console.Write("Enter quantity: ");
+                                        string quantitychk = Console.ReadLine();
+
+                                        while (!int.TryParse(quantitychk, out int value))
+                                        {
+                                            Console.Write("\"{0}\" is not a valid option, please select again: \n", quantitychk);
+                                            Console.Write("Please enter correct quantity: ");
+                                            quantitychk = Console.ReadLine();
+                                        }
+
+                                        int quantity = int.Parse(quantitychk);
+                                        Console.Write("Enter number of accessories to add: ");
+                                        string accessoriesnumchk = Console.ReadLine();
+
+                                        while (!int.TryParse(accessoriesnumchk, out int value))
+                                        {
+                                            Console.Write("\"{0}\" is not a valid option, please select again: \n", accessoriesnumchk);
+                                            Console.Write("Please enter correct number of accessories to add: ");
+                                            accessoriesnumchk = Console.ReadLine();
+                                        }
+
+                                        int accessoriesnum = int.Parse(accessoriesnumchk);
+                                        string[] accessories;
+                                        if (accessoriesnum != 0)
+                                        {
+                                            accessories = new string[accessoriesnum];
+                                            for (int i = 0; i < accessoriesnum; i++)
+                                            {
+                                                Console.Write("Enter accessory number {0} out of {1}: ", i + 1, accessoriesnum);
+                                                accessories[i] = Console.ReadLine();
+                                            }
+                                        }
+
+                                        else accessories = new string[1] { "None" };
+
+                                        shopList[shopindex].Computer.Add(new Computer(pcid, brand, processor, storagetype, storagesize, ram, price, quantity, accessories));
+                                        pcid++;
+                                        Console.Clear();
+                                        Console.WriteLine("Computer added\n");
+                                    }
+
+                                    if (suboption == 2)
+                                    {
+                                        Console.Clear();
+                                        if (shopList[shopindex].Computer.Any())
+                                        {
+                                            Console.WriteLine("Computers in inventory:");
+
+                                            foreach (Computer list in shopList[shopindex].Computer)
+                                            {
+                                                Console.WriteLine(list + "\n");
+                                            }
+
+                                            Console.Write("Please select id to delete: ");
+                                            string delchk = Console.ReadLine();
+
+                                            while (!int.TryParse(delchk, out int value))
+                                            {
+                                                Console.Write("\"{0}\" is not a valid option, please select again: \n", delchk);
+                                                Console.Write("Please enter correct ID input: ");
+                                                delchk = Console.ReadLine();
+                                            }
+
+                                            int del = int.Parse(delchk);
+                                            var id_del = shopList[shopindex].Computer.SingleOrDefault(x => x.Id == del);
+                                            if (id_del != null)
+                                            {
+                                                shopList[shopindex].Computer.Remove(id_del);
+                                                Console.Clear();
+                                                Console.WriteLine("ID {0}: was successfully deleted\n", del);
+                                            }
+
+                                            else
+                                            {
+                                                Console.Clear();
+                                                Console.WriteLine("ID not found\n");
+                                            }
+                                        }
+
+                                        else Console.WriteLine("No computers in inventory\n");
+                                    }
+
+                                    if (suboption == 3)
+                                    {
+                                        Console.Clear();
+                                        Console.Write("Please select pc brand to find: ");
+                                        string brand = Console.ReadLine();
+                                        Console.WriteLine();
+
+                                        List<Computer> pcBrand = new List<Computer>();
+
+                                        foreach (Computer list in shopList[shopindex].Computer)
+                                        {
+                                            if (list.Brand == brand)
+                                            {
+                                                pcBrand.Add(list);
+                                            }
+                                        }
+
+                                        if (pcBrand.Any())
+                                        {
+                                            foreach (Computer list in pcBrand)
+                                            {
+                                                Console.WriteLine(list + "\n");
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("Brand doesnt exist\n");
+                                        }
+                                    }
+
+                                    if (suboption == 4)
+                                    {
+                                        Console.Clear();
+                                        if (shopList[shopindex].Computer.Any())
+                                        {
+                                            Console.WriteLine("Computers in inventory:");
+
+                                            foreach (Computer list in shopList[shopindex].Computer)
+                                            {
+                                                Console.WriteLine(list + "\n");
+                                            }
+                                        }
+
+                                        else Console.WriteLine("No computers in inventory\n");
+                                    }
+
+                                    if (suboption == 5)
+                                    {
+                                        Console.Clear();
+                                        int sum = 0;
+                                        foreach (Computer list in shopList[shopindex].Computer)
+                                        {
+                                            sum = sum + list.Price;
+                                        }
+
+                                        Console.Clear();
+                                        Console.WriteLine("Total computer price is: {0}\n", sum);
+                                    }
+                                }
+
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("\"{0}\" is not a valid option, please select again\n", suboption);
+                                }
+                            }
+
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Shop doesnt exist\n");
+                            }
+                        }
+
+                        else Console.WriteLine("Shop list is empty\n");
                     }
 
                     if (option == 7)
                     {
                         Console.Clear();
+                        if (shopList.Any())
+                        {
+                            Console.Write("Please input shop id to delete: ");
+                            string shopdelchk = Console.ReadLine();
+
+                            while (!int.TryParse(shopdelchk, out int value))
+                            {
+                                Console.Clear();
+                                Console.Write("\"{0}\" is not a valid shop id, please select again: \n\n", shopdelchk);
+                                Console.Write("Please input correct shop id: ");
+                                shopdelchk = Console.ReadLine();
+                            }
+
+                            int shopdel = int.Parse(shopdelchk);
+                            bool storedelflag = false;
+                            int shopdelindex = -1;
+
+                            foreach (Shop item in shopList)
+                            {
+                                if (item.Id == shopdel)
+                                {
+                                    storedelflag = true;
+                                    shopdelindex = shopList.IndexOf(item);
+                                }
+                            }
+
+                            if (storedelflag)
+                            {
+                                shopList.RemoveAt(shopdelindex);
+                            }
+
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Shop doesnt exist\n");
+                            }
+                        }
+
+                        else Console.WriteLine("Shop list is empty\n");
                     }
 
                     if (option == 8)
