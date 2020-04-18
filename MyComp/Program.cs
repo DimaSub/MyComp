@@ -8,6 +8,22 @@ namespace MyComp
     {
         public static void Main(string[] args)
         {
+            string username = "admin";
+            string password = "abc123";
+            string usernamechk = null;
+            string passwordchk = null;
+
+            while (username != usernamechk || password != passwordchk)
+            {
+                Console.Write("Please enter username: ");
+                usernamechk = Console.ReadLine();
+                Console.Write("Please enter password: ");
+                passwordchk = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("Login incorrect, please try again\n");
+            }
+
+            Console.Clear();
             int exit = 0;
             string mainmenu = "Please input your option ->" +
                           "\n\n1->Add new shop" +
@@ -177,11 +193,52 @@ namespace MyComp
 
                         else Console.WriteLine("Shop list is empty\n");
                     }
-                    
+
 
                     if (option == 4)
                     {
                         Console.Clear();
+                        if (shopList.Any())
+                        {
+                            Console.WriteLine("Search store by details: ");
+                            Console.Write("City - ");
+                            string cityfind = Console.ReadLine();
+                            Console.Write("Street - ");
+                            string streetfind = Console.ReadLine();
+                            Console.Write("Building number - ");
+                            string buildingfindchk = Console.ReadLine();
+
+                            while (!int.TryParse(buildingfindchk, out int value))
+                            {
+                                Console.Write("\"{0}\" is not a valid option.\n", buildingfindchk);
+                                Console.Write("Please enter correct building number: ");
+                                buildingfindchk = Console.ReadLine();
+                            }
+
+                            int buildingfind = int.Parse(buildingfindchk);
+
+                            bool found = false;
+                            foreach (Shop item in shopList)
+                            {
+                                if(item.Address.City == cityfind ||
+                                    item.Address.Street == streetfind ||
+                                       item.Address.Building == buildingfind)
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine(item);
+                                    Console.WriteLine();
+                                    found = true;
+                                }
+                            }
+
+                            if (!found)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Shop not found\n");
+                            }
+                        }
+
+                        else Console.WriteLine("Shop list is empty\n");
                     }
 
                     if (option == 5)
